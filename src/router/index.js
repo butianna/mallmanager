@@ -7,6 +7,10 @@ import Home from '@/components/home/home.vue'
 import Users from '@/components/users/users.vue'
 import Right from '@/components/rights/right.vue'
 import Role from '@/components/rights/role.vue'
+import Goodslist from '@/components/goods/goodslist.vue'
+import GoodsAdd from '@/components/goods/goodsadd.vue'
+import CateParams from '@/components/goods/cateparams.vue'
+import GoodsCate from '@/components/goods/goodscate.vue'
 import { Message } from 'element-ui'
 Vue.use(Router)
 
@@ -31,32 +35,44 @@ const router = new Router({
       name: 'role',
       path: '/role',
       component: Role
+    }, {
+      name: 'goods',
+      path: '/goods',
+      component: Goodslist
+    }, {
+      name: 'goodsadd',
+      path: '/goods',
+      component: GoodsAdd
+    }, {
+      name: 'params',
+      path: '/params',
+      component: CateParams
+    }, {
+      name: 'categories',
+      path: '/categories',
+      component: GoodsCate
     }]
   }]
 })
 
-// 在路由配置生效之前 同意判断token
+// 在路由配置生效之前 统一判断token
 // 路由守卫 在路由配置生效之前
 // 路由/导航 守卫
 // to-->要去的路由配置
 // from-->当前的路由配置
 // / -login  home->login to就是login from就是home路由配置
 router.beforeEach((to, from, next) => {
-  // to from next
-  // 如果要去的是登录->next()
-  // 如果要去的不是登录 判断token token没有来到登录 如果有继续渲染组件
-  if (to.path === '/login') {
+  // console.log(to, from)
+  if (to.name === 'login') {
     next()
   } else {
-    const token = localStorage.getItem(`token`)
+    const token = localStorage.getItem('token')
     if (!token) {
-      // this.$router.push({name:'login'})
-      // 提示
-      // this.$message.warning('回到登录')
-      Message.warning('回到登录页')
-      router.push({ name: 'login' })
+      router.push({ 'name': 'login' })
+      Message.warning('请先登录')
       return
     }
+    next()
   }
 })
 

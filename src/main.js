@@ -24,7 +24,7 @@ Vue.filter('formatdate', (v) => {
   return moment(v).format('YYYY-MM-DD')
 })
 // 
-Vue.component('my-bread',MyBread)
+Vue.component('my-bread', MyBread)
 
 /* eslint-disable no-new */
 new Vue({
