@@ -118,9 +118,10 @@
 </template>
 
 <script>
-import MyBread from "../cuscom/myBread.vue";
 // 引入element-tree-grid
-const ElTreeGrid = require("element-tree-grid");
+// const ElTreeGrid = require("element-tree-grid");
+import ElTreeGrid from "element-tree-grid";
+import MyBread from "../cuscom/myBread.vue";
 export default {
   // 组件名<el-tree-grid>
   components: {
