@@ -9,59 +9,59 @@
 
 <script>
 import * as echarts from 'echarts'
-import MyBread from '../cuscom/myBread.vue';
+import MyBread from '../cuscom/myBread.vue'
 
 export default {
   components: {MyBread},
-  data() {
+  data () {
     return {
-      option: {},
-    };
+      option: {}
+    }
   },
   methods: {
-    async loadData() {
+    async loadData () {
       const {
-        data: { data },
-      } = await this.$http.get(`reports/type/1`);
+        data: { data }
+      } = await this.$http.get(`reports/type/1`)
       const optionEcharts = {
         title: {
-          text: "",
+          text: ''
         },
         tooltip: {
-          trigger: "axis",
+          trigger: 'axis',
           axisPointer: {
-            type: "cross",
+            type: 'cross',
             label: {
-              backgroundColor: "#6a7985",
-            },
-          },
+              backgroundColor: '#6a7985'
+            }
+          }
         },
         legend: {
-          data: ["邮件营销", "联盟广告", "视频广告", "直接访问", "搜索引擎"],
+          data: ['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎']
         },
         toolbox: {
           feature: {
-            saveAsImage: {},
-          },
+            saveAsImage: {}
+          }
         },
         grid: {
-          left: "3%",
-          right: "4%",
-          bottom: "3%",
-          containLabel: true,
-        },
-      };
-      this.option = { ...data, ...optionEcharts };
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        }
+      }
+      this.option = { ...data, ...optionEcharts }
       // console.log(this.option)
 
-      const charts = echarts.init(this.$refs.ecartsArea);
-      charts.setOption(this.option);
-    },
+      const charts = echarts.init(this.$refs.ecartsArea)
+      charts.setOption(this.option)
+    }
   },
-  created() {
-    this.loadData();
-  },
-};
+  created () {
+    this.loadData()
+  }
+}
 </script>
 
 <style>

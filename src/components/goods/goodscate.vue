@@ -120,15 +120,15 @@
 <script>
 // 引入element-tree-grid
 // const ElTreeGrid = require("element-tree-grid");
-import ElTreeGrid from "element-tree-grid";
-import MyBread from "../cuscom/myBread.vue";
+import ElTreeGrid from 'element-tree-grid'
+import MyBread from '../cuscom/myBread.vue'
 export default {
   // 组件名<el-tree-grid>
   components: {
     ElTreeGrid,
-    MyBread,
+    MyBread
   },
-  data() {
+  data () {
     return {
       list: [],
       pagenum: 1,
@@ -138,8 +138,8 @@ export default {
       editDialogFormVisible: false,
       form: {
         cat_pid: -1,
-        cat_name: "",
-        cat_level: 0,
+        cat_name: '',
+        cat_level: 0
       },
       // 绑定层级下拉框
       selectedOptions: [],
@@ -147,120 +147,120 @@ export default {
       options: [],
       // 层级下拉框中的配置
       defaultProps: {
-        value: "cat_id",
-        label: "cat_name",
-        children: "children",
-      },
-    };
+        value: 'cat_id',
+        label: 'cat_name',
+        children: 'children'
+      }
+    }
   },
-  created() {
-    this.loadData();
+  created () {
+    this.loadData()
   },
   methods: {
     // 点击编辑对话框的确定按钮, 发送编辑分类的网络请求
-    async handleEdit() {
+    async handleEdit () {
       const res = await this.$http.put(
         `categories/${this.form.cat_id}`,
         this.form
-      );
-      const { meta } = res.data;
+      )
+      const { meta } = res.data
       if (meta.status === 200) {
-        this.editDialogFormVisible = false;
-        this.$message.success(meta.msg);
-        this.loadData();
+        this.editDialogFormVisible = false
+        this.$message.success(meta.msg)
+        this.loadData()
       } else {
-        this.$message.error(meta.msg);
+        this.$message.error(meta.msg)
       }
     },
     // 点击编辑按钮,弹出编辑对话框
-    handleOpenEdit(cat) {
-      this.form.cat_name = cat.cat_name;
-      this.form.cat_id = cat.cat_id;
-      console.log(this.form);
-      this.editDialogFormVisible = true;
+    handleOpenEdit (cat) {
+      this.form.cat_name = cat.cat_name
+      this.form.cat_id = cat.cat_id
+      console.log(this.form)
+      this.editDialogFormVisible = true
     },
     // 点击删除按钮,弹出删除提示框,发送删除请求
-    async handleDelete(catId) {
-      this.$confirm("此操作将永久删除, 是否继续?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning",
+    async handleDelete (catId) {
+      this.$confirm('此操作将永久删除, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
       })
         .then(async () => {
           // 发送删除的网络请求
           const { data: resData } = await this.$http.delete(
             `categories/${catId}`
-          );
+          )
           if (resData.meta.status === 200) {
-            this.$message.success("删除成功");
-            this.loadData();
+            this.$message.success('删除成功')
+            this.loadData()
           } else {
-            this.$message.error(resData.meta.msg);
+            this.$message.error(resData.meta.msg)
           }
         })
         .catch(() => {
           this.$message({
-            type: "info",
-            message: "已取消删除",
-          });
-        });
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
     },
     // 点击对话框的确定按钮, 添加商品分类信息
-    async handleAdd() {
+    async handleAdd () {
       // cat_level cat_pid
       // 分类的父id
       // 如果级联下拉框 没有选择 cat_pid=0
       // 如果级联下拉框 选中一级 cat_pid=selecetdOptions[0]
       // 如果级联下拉框 选中耳机 cat_pid=selectedOptions[1]
       if (this.selectedOptions.length === 0) {
-        this.form.cat_pid = 0;
-        this.form.cat_level = 0;
+        this.form.cat_pid = 0
+        this.form.cat_level = 0
       } else if (this.selectedOptions.length === 1) {
-        this.form.cat_pid = this.selectedOptions[0];
-        this.form.cat_level = 1;
+        this.form.cat_pid = this.selectedOptions[0]
+        this.form.cat_level = 1
       } else if (this.selectedOptions.length === 2) {
-        this.form.cat_pid = this.selectedOptions[1];
-        this.form.cat_level = 2;
+        this.form.cat_pid = this.selectedOptions[1]
+        this.form.cat_level = 2
       }
       // 发送请求 返回201 则添加
-      const { data: resData } = await this.$http.post(`categories`, this.form);
+      const { data: resData } = await this.$http.post(`categories`, this.form)
       if (resData.meta.status === 201) {
-        this.$message.success("添加成功");
-        this.loadData();
-        this.addDialogFormVisible = false;
+        this.$message.success('添加成功')
+        this.loadData()
+        this.addDialogFormVisible = false
       } else {
-        this.$message.error(resData.meta.msg);
+        this.$message.error(resData.meta.msg)
       }
     },
-    async handleShowAddDialog() {
+    async handleShowAddDialog () {
       // 点击添加按钮, 显示对话框
-      this.addDialogFormVisible = true;
+      this.addDialogFormVisible = true
       // 加载层级数据
-      const { data: resData } = await this.$http.get(`categories?type=2`);
-      this.options = resData.data;
+      const { data: resData } = await this.$http.get(`categories?type=2`)
+      this.options = resData.data
     },
-    async loadData() {
+    async loadData () {
       const { data: resData } = await this.$http.get(
         `categories?type=3&pagenum=${this.pagenum}&pagesize=${this.pagesize}`
-      );
+      )
       const {
-        data: { result, total },
-      } = resData;
-      this.list = result;
-      this.total = total;
+        data: { result, total }
+      } = resData
+      this.list = result
+      this.total = total
     },
-    handleSizeChange(val) {
-      this.pagesize = val;
-      this.loadData();
-      console.log(`每页 ${val} 条`);
+    handleSizeChange (val) {
+      this.pagesize = val
+      this.loadData()
+      console.log(`每页 ${val} 条`)
     },
-    handleCurrentChange(val) {
-      this.pagenum = val;
-      this.loadData();
-      console.log(`当前页: ${val}`);
-    },
-  },
-};
+    handleCurrentChange (val) {
+      this.pagenum = val
+      this.loadData()
+      console.log(`当前页: ${val}`)
+    }
+  }
+}
 </script>
 
 <style>

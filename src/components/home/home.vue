@@ -48,11 +48,11 @@
 
 <script>
 export default{
-    data(){
-        return{
-            menus:[],
-        }
-    },
+  data () {
+    return {
+      menus: []
+    }
+  },
   // new Vue之前触发
   beforeCreate () {
     // 获取token
@@ -64,7 +64,7 @@ export default{
     // if token 有--渲染组件
   },
   created () {
-      this.getMenus()
+    this.getMenus()
   },
   methods: {
     handleSignout () {
@@ -76,10 +76,10 @@ export default{
       this.$router.push({ name: 'login' })
     },
     // 获取导航数据
-    async getMenus(){
-        const res = await this.$http.get(`menus`)
-        // console.log(res);
-        this.menus = res.data.data;
+    async getMenus () {
+      const res = await this.$http.get(`menus`)
+      // console.log(res);
+      this.menus = res.data.data
     }
   }
 }

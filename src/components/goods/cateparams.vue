@@ -38,7 +38,7 @@
                 closable
                 :disable-transitions="false"
                 @close="handleClose(scope.row.attr_vals,scope.row.attr_id,scope.row.attr_name,tag)"
-              > 
+              >
                 {{ tag }}
               </el-tag>
               <el-input
@@ -89,7 +89,7 @@
         <!-- 表格 -->
         <el-table :data="arrStaticparams" style="width: 100%">
           <el-table-column type="index" label="#">
-            
+
           </el-table-column>
           <el-table-column label="属性名称" prop="attr_name"> </el-table-column>
           <el-table-column label="属性值" prop="attr_vals"> </el-table-column>
@@ -120,109 +120,109 @@
 </template>
 
 <script>
-import myBread from "../cuscom/myBread.vue";
+import myBread from '../cuscom/myBread.vue'
 export default {
   components: { myBread },
-  data() {
+  data () {
     return {
       // 级联选择器绑定的数据
       options: [],
       selectOptions: [],
       defaultProp: {
-        label: "cat_name",
-        value: "cat_id",
-        children: "children",
+        label: 'cat_name',
+        value: 'cat_id',
+        children: 'children'
       },
       // 动态参数的数据数组
       arrDyparams: [],
-      active: "1",
+      active: '1',
       inputVisible: false,
-      inputValue: "",
-      arrStaticparams:[],
-    };
+      inputValue: '',
+      arrStaticparams: []
+    }
   },
-  created() {
-    this.getGoodCate();
+  created () {
+    this.getGoodCate()
   },
   methods: {
     // 级联选择器改变
-    async handleChange() {
+    async handleChange () {
       if (this.selectOptions.length === 3) {
         // 获取动态数据
         const res = await this.$http.get(
           `categories/${this.selectOptions[2]}/attributes?sel=many`
-        );
+        )
 
-        this.arrDyparams = res.data.data;
+        this.arrDyparams = res.data.data
         this.arrDyparams.forEach((item) => {
           item.attr_vals =
-            item.attr_vals.length === 0 ? [] : item.attr_vals.trim().split(",");
-        });
+            item.attr_vals.length === 0 ? [] : item.attr_vals.trim().split(',')
+        })
         // console.log(this.arrDyparams);
       }
     },
     // 获取三级分类的信息
-    async getGoodCate() {
-      const res = await this.$http.get(`categories?type=3`);
+    async getGoodCate () {
+      const res = await this.$http.get(`categories?type=3`)
       // console.log(res);
-      this.options = res.data.data;
+      this.options = res.data.data
     },
     // tab切换时
-    async handleClick() {
-      if(this.active==="2"){
-        if(this.selectOptions.length===3){
+    async handleClick () {
+      if (this.active === '2') {
+        if (this.selectOptions.length === 3) {
           // 获取静态数据
           // 获取静态参数的数据
           const res = await this.$http.get(
             `categories/${this.selectOptions[2]}/attributes?sel=only`
-          );
+          )
           // console.log(res);
-          this.arrStaticparams = res.data.data;
-          }
+          this.arrStaticparams = res.data.data
+        }
       }
     },
     // 点击x按钮
-    async  handleClose(attr_vals,attr_id,attr_name,tag) {
-      attr_vals.splice(attr_vals.indexOf(tag), 1);     
-        // 发送请求
-        // put请求体{attr_name:?,attr_sel:?,attr_vals:?}
-        // attr_name	参数名称	不能为空
-        // attr_sel	[only,many]	不能为空
-        // attr_vals	如果是 many 就需要填写值的选项，以逗号分隔
-        let putData={
-          attr_name:attr_name,
-          attr_sel:"many",
-          attr_vals:attr_vals.join(","),
-        }
-        const res = await this.$http.put(`categories/${this.selectOptions[2]}/attributes/${attr_id}`,putData)
-        console.log(res);
+    async  handleClose (attr_vals, attr_id, attr_name, tag) {
+      attr_vals.splice(attr_vals.indexOf(tag), 1)
+      // 发送请求
+      // put请求体{attr_name:?,attr_sel:?,attr_vals:?}
+      // attr_name	参数名称	不能为空
+      // attr_sel	[only,many]	不能为空
+      // attr_vals	如果是 many 就需要填写值的选项，以逗号分隔
+      let putData = {
+        attr_name: attr_name,
+        attr_sel: 'many',
+        attr_vals: attr_vals.join(',')
+      }
+      const res = await this.$http.put(`categories/${this.selectOptions[2]}/attributes/${attr_id}`, putData)
+      console.log(res)
     },
     // 点击+newTag按钮
-    showInput() {
-      this.inputVisible = true;
-      this.$nextTick((_) => {     
-        this.$refs.saveTagInput.$refs.input.focus();  
-      });
+    showInput () {
+      this.inputVisible = true
+      this.$nextTick((_) => {
+        this.$refs.saveTagInput.$refs.input.focus()
+      })
     },
     // 回车键or失去焦点
-    async handleInputConfirm(attr_vals,attr_id,attr_name) {
-      let inputValue = this.inputValue;
+    async handleInputConfirm (attr_vals, attr_id, attr_name) {
+      let inputValue = this.inputValue
       if (inputValue) {
-        attr_vals.push(inputValue);
+        attr_vals.push(inputValue)
         // 发送请求
-        let putData={
-          attr_name:attr_name,
-          attr_sel:"many",
-          attr_vals:attr_vals.join(","),
+        let putData = {
+          attr_name: attr_name,
+          attr_sel: 'many',
+          attr_vals: attr_vals.join(',')
         }
-        const res = await this.$http.put(`categories/${this.selectOptions[2]}/attributes/${attr_id}`,putData)
-        console.log(res);
+        const res = await this.$http.put(`categories/${this.selectOptions[2]}/attributes/${attr_id}`, putData)
+        console.log(res)
       }
-      this.inputVisible = false;
-      this.inputValue = "";
-    },
-  },
-};
+      this.inputVisible = false
+      this.inputValue = ''
+    }
+  }
+}
 </script>
 
 <style>

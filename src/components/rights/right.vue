@@ -19,23 +19,23 @@
 </template>
 
 <script>
-export default {
-  data() {
+export default { 
+  data () {
     return {
-      rightlist: [],
-    };
+      rightlist: []
+    }
   },
-  created() {
-    this.getRightList();
+  created () {
+    this.getRightList()
   },
   methods: {
-    async getRightList() {
-      const res = await this.$http.get(`rights/list`);
-      console.log(res);
-      this.rightlist = res.data.data;
-    },
-  },
-};
+    async getRightList () {
+      const res = await this.$http.get(`rights/list`)
+      console.log(res)
+      this.rightlist = res.data.data
+    }
+  }
+}
 </script>
 
 <style>

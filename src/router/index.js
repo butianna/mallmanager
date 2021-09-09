@@ -2,17 +2,17 @@ import Vue from 'vue'
 import Router from 'vue-router'
 // import Login from '../components/login/login.vue'
 // 简写 @ 会自动找到src
-import Login from '@/components/login/login.vue'
-import Home from '@/components/home/home.vue'
-import Users from '@/components/users/users.vue'
-import Right from '@/components/rights/right.vue'
-import Role from '@/components/rights/role.vue'
-import Goodslist from '@/components/goods/goodslist.vue'
-import GoodsAdd from '@/components/goods/goodsadd.vue'
-import CateParams from '@/components/goods/cateparams.vue'
-import GoodsCate from '@/components/goods/goodscate.vue'
-import Orders from '@/components/orders/orders.vue'
-import Reports from '@/components/reports/reports.vue'
+const Login = () => import('@/components/login/login.vue')
+const Home = () => import('@/components/home/home.vue')
+const Users = () => import('@/components/users/users.vue')
+const Right = () => import('@/components/rights/right.vue')
+const Role = () => import('@/components/rights/role.vue')
+const Goodslist = () => import('@/components/goods/goodslist.vue')
+const GoodsAdd = () => import('@/components/goods/goodsadd.vue')
+const CateParams = () => import('@/components/goods/cateparams.vue')
+const GoodsCate = () => import('@/components/goods/goodscate.vue')
+const Orders = () => import('@/components/orders/orders.vue')
+const Reports = () => import('@/components/reports/reports.vue')
 import { Message } from 'element-ui'
 Vue.use(Router)
 
@@ -35,7 +35,7 @@ const router = new Router({
       component: Right
     }, {
       name: 'role',
-      path: '/role',
+      path: '/roles',
       component: Role
     }, {
       name: 'goods',
@@ -87,4 +87,3 @@ router.beforeEach((to, from, next) => {
 })
 
 export default router
-

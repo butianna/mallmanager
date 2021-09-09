@@ -41,8 +41,8 @@
         <!--
             如果单元格内显示的内容不是字符串（文本）
             需要给被显示的内容外层包裹一个template
-           -->
-        <!-- 
+        -->
+        <!--
             template内部要用数据 设置slot-scope属性
             该属性的值是要用数据create_time的数据源userlist
         -->
@@ -169,8 +169,8 @@
           {{ currUsername }}
         </el-form-item>
         <el-form-item label="角色" label-width="100px">
-          <!-- 
-              如果外层select绑定的数据的值和option的value一样 
+          <!--
+              如果外层select绑定的数据的值和option的value一样
               就会显示该option的label值
           -->
           <el-select v-model="currRoleId">
@@ -195,9 +195,9 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
-      query: "",
+      query: '',
       // 表格绑定的数据
       userlist: [],
       // 分页相关的数据
@@ -210,101 +210,101 @@ export default {
       dialogFormVisibleRol: false,
       // 添加用户的表单数据
       form: {
-        username: "",
-        password: "",
-        email: "",
-        mobile: "",
+        username: '',
+        password: '',
+        email: '',
+        mobile: ''
       },
       // 分配角色
       currRoleId: -1,
       currUserId: -1,
-      currUsername: "",
+      currUsername: '',
       // 保存所有的角色数据
-      roles: [],
-    };
+      roles: []
+    }
   },
-  created() {
-    this.getUserList();
+  created () {
+    this.getUserList()
   },
   methods: {
-    //   获取用户列表的请求
-    async getUserList() {
-      //   query 查询参数 可以为空
+    // 获取用户列表的请求
+    async getUserList () {
+      // query 查询参数 可以为空
       // pagenum 当前页码 不能为空
       // pagesize 每页显示条数 不能为空
 
       // 需要授权的API 必须在请求头中使用 Authorization 字段提供token令牌
-      const AUTH_TOKEN = localStorage.getItem("token");
-      this.$http.defaults.headers.common["Authorization"] = AUTH_TOKEN;
+      const AUTH_TOKEN = localStorage.getItem('token')
+      this.$http.defaults.headers.common['Authorization'] = AUTH_TOKEN
 
       const res = await this.$http.get(
         `users?query=${this.query}&pagenum=${this.pagenum}
-              &pagesize=${this.pagesize}
-              `
-      );
-      console.log(res);
+              &pagesize=${this.pagesize}`
+      )
+      console.log(res)
       const {
         meta: { status, msg },
-        data: { users, total },
-      } = res.data;
+        data: { users, total }
+      } = res.data
       if (status === 200) {
         // 1、给表格数据赋值
-        this.userlist = users;
+        this.userlist = users
         // 2、给total赋值
-        this.total = total;
+        this.total = total
         // 3、提示
-        this.$message.success(msg);
+        this.$message.success(msg)
       } else {
         // 提示
-        this.$message.warning(msg);
+        this.$message.warning(msg)
       }
     },
     // 分页相关的方法
-    handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
+    handleSizeChange (val) {
+      console.log(`每页 ${val} 条`)
       // 每页显示条数改变
-      this.pagesize = val;
-      this.pagenum = 1;
-      this.getUserList();
+      this.pagesize = val
+      //回到第一页
+      this.pagenum = 1
+      this.getUserList()
     },
-    handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
+    handleCurrentChange (val) {
+      console.log(`当前页: ${val}`)
       // 页码改变时
-      this.pagenum = val;
-      this.getUserList();
+      this.pagenum = val
+      this.getUserList()
     },
     // 搜索用户
-    searchUser() {
-      this.getUserList();
+    searchUser () {
+      this.getUserList()
     },
     // 清空搜索框 重新获取数据
-    loadUserlist() {
-      this.getUserList();
+    loadUserlist () {
+      this.getUserList()
     },
     // 添加用户--显示对话框
-    showAddUserDia() {
-      this.form = {};
-      this.dialogFormVisibleAdd = true;
+    showAddUserDia () {
+      this.form = {}
+      this.dialogFormVisibleAdd = true
     },
     // 添加用户--发送请求
-    async addUser() {
+    async addUser () {
       // 2、关闭对话框
-      this.dialogFormVisibleAdd = false;
+      this.dialogFormVisibleAdd = false
 
-      const res = await this.$http.post(`users`, this.form);
-      console.log(res);
+      const res = await this.$http.post(`users`, this.form)
+      console.log(res)
       const {
         meta: { status, msg },
-        data,
-      } = res.data;
+        data
+      } = res.data
       if (status === 201) {
         // 1、提示成功
-        this.$message.success(msg);
+        this.$message.success(msg)
         // 3、更新视图
-        this.getUserList();
+        this.getUserList()
         // 4、清空文本框
         // this.form.username = ""
-        this.form = {};
+        this.form = {}
         /* 循环清空文本框
         for (const key in this.form) {
           if (this.form.hasOwnProperty(key)) {
@@ -312,99 +312,99 @@ export default {
           }
         } */
       } else {
-        this.$message.warning(msg);
+        this.$message.warning(msg)
       }
     },
-    //删除用户--打开消息盒子 confirm
-    showDeleUserMsgBox(userId) {
-      this.$confirm("删除用户?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning",
+    // 删除用户--打开消息盒子 confirm
+    showDeleUserMsgBox (userId) {
+      this.$confirm('删除用户?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
       })
         .then(async () => {
           // v 注意async的位置 它在离await最近的函数
           // 发送删除的请求：id---用户id
           // 1、data中找到userId
           // 2、把userId以showDeleUserMsgBox参数形式传进来
-          const res = await this.$http.delete(`users/${userId}`);
-          console.log(res);
+          const res = await this.$http.delete(`users/${userId}`)
+          console.log(res)
           if (res.data.meta.status === 200) {
             // 页码回到第一页
-            this.pagenum = 1;
+            this.pagenum = 1
             // 提示
             this.$message({
-              type: "success",
-              message: res.data.meta.msg,
-            });
+              type: 'success',
+              message: res.data.meta.msg
+            })
             // 更新视图
-            this.getUserList();
+            this.getUserList()
           }
         })
         .catch(() => {
           this.$message({
-            type: "info",
-            message: "已取消删除",
-          });
-        });
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
     },
     // 编辑用户---显示对话框
-    showEditUserDia(user) {
-      console.log(user);
+    showEditUserDia (user) {
+      console.log(user)
       // 获取用户数据
-      this.form = user;
+      this.form = user
       // user 其实是调方法传过来的scope.row
-      this.dialogFormVisibleEdit = true;
+      this.dialogFormVisibleEdit = true
     },
     // 编辑用户-发送请求
-    async editUser() {
+    async editUser () {
       // users/:id
-      const res = await this.$http.put(`users/${this.form.id}`, this.form);
-      console.log(res);
+      const res = await this.$http.put(`users/${this.form.id}`, this.form)
+      console.log(res)
       // 1、关闭对话框
-      this.dialogFormVisibleEdit = false;
+      this.dialogFormVisibleEdit = false
       // 2、更新视图
-      this.getUserList();
+      this.getUserList()
     },
     // 修改状态
-    async changeMgStats(user) {
+    async changeMgStats (user) {
       // 发送请求
       // users/:uId/state/:type
       const res = await this.$http.put(
         `users/${user.id}/state/${user.mg_state}`
-      );
-      console.log(res);
+      )
+      console.log(res)
     },
     // 分配角色 打开对话框
-    async showSetUserRoleDia(user) {
-      this.currUsername = user.username;
+    async showSetUserRoleDia (user) {
+      this.currUsername = user.username
       // 给currUserId赋值
-      this.currUserId = user.id;
+      this.currUserId = user.id
       // 获取当前用户角色的id->rid
-      const res = await this.$http.get(`users/${user.id}`);
+      const res = await this.$http.get(`users/${user.id}`)
       // console.log(res);
       // 接口文档的key名是role_id 其实是rid
-      this.currRoleId = res.data.data.rid;
+      this.currRoleId = res.data.data.rid
       // 获取所有的角色
-      const res1 = await this.$http.get(`roles`);
-      console.log(res1);
-      this.roles = res1.data.data;
-      this.dialogFormVisibleRol = true;
+      const res1 = await this.$http.get(`roles`)
+      console.log(res1)
+      this.roles = res1.data.data
+      this.dialogFormVisibleRol = true
     },
-    //分配角色 发送请求
-    async setRole() {
+    // 分配角色 发送请求
+    async setRole () {
       // users/:id/role
       // :id 要修改的用户的id的值
       // 请求体中rid修改的新值角色id
       const res = await this.$http.put(`users/${this.currUserId}/role`, {
-        rid: this.currRoleId,
-      });
-      console.log(res);
+        rid: this.currRoleId
+      })
+      console.log(res)
       // 关闭对话框
-      this.dialogFormVisibleRol = false;
-    },
-  },
-};
+      this.dialogFormVisibleRol = false
+    }
+  }
+}
 </script>
 
 <style>

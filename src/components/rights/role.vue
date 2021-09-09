@@ -89,7 +89,7 @@
     </el-table>
     <!-- 修改/分配角色对话框 -->
     <el-dialog title="修改权限" :visible.sync="dialogFormVisibleRight">
-      <!-- 
+      <!--
           树形结构
           date->数据源[]
           show-checkbox->选择框
@@ -124,49 +124,49 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       rolelist: [],
       dialogFormVisibleRight: false,
       // 树形结构的数据
       treelist: [],
       defaultProps: {
-        label: "authName",
-        children: "children",
+        label: 'authName',
+        children: 'children'
       },
       arrexpand: [],
       arrcheck: [],
-      currRoleId: -1,
-    };
+      currRoleId: -1
+    }
   },
-  created() {
-    this.getRoleList();
+  created () {
+    this.getRoleList()
   },
   methods: {
-    async getRoleList() {
-      const res = await this.$http.get(`roles`);
+    async getRoleList () {
+      const res = await this.$http.get(`roles`)
       // console.log(res);
-      this.rolelist = res.data.data;
+      this.rolelist = res.data.data
     },
     // 取消权限
-    async deleRight(role, rightId) {
+    async deleRight (role, rightId) {
       // roles/:roleId/rights/:rightId
       // roleId 当前角色的
       // rightId 要删除的权限id
-      const res = await this.$http.delete(`roles/${role.id}/rights/${rightId}`);
+      const res = await this.$http.delete(`roles/${role.id}/rights/${rightId}`)
       // console.log(res);
       // 删除成功 返回了200和该角色的剩余权限
       // this.getRoleList();
-      role.children = res.data.data;
+      role.children = res.data.data
     },
     // 修改/分配权限 显示对话框
-    async showSetRightDia(role) {
+    async showSetRightDia (role) {
       // 给currRoleId赋值
-      this.currRoleId = role.id;
+      this.currRoleId = role.id
       // 获取树形结构的权限数据 ights/:type
-      const res = await this.$http.get(`rights/tree`);
-      console.log(res);
-      this.treelist = res.data.data;
+      const res = await this.$http.get(`rights/tree`)
+      console.log(res)
+      this.treelist = res.data.data
       // 展开所有的权限
       // var arrtemp = [];
       // this.treelist.forEach((item1) => {
@@ -183,53 +183,53 @@ export default {
 
       // 显示该角色拥有的权限
       // console.log(role);
-      let arrtemp1 = [];
+      let arrtemp1 = []
       role.children.forEach((item1) => {
         // arrtemp1.push(item1.id);
         item1.children.forEach((item2) => {
           // arrtemp1.push(item2.id);
           item2.children.forEach((item3) => {
-            arrtemp1.push(item3.id);
-          });
-        });
-      });
+            arrtemp1.push(item3.id)
+          })
+        })
+      })
       // console.log(arrtemp1);
-      this.arrcheck = arrtemp1;
+      this.arrcheck = arrtemp1
       // 显示对话框
-      this.dialogFormVisibleRight = true;
+      this.dialogFormVisibleRight = true
     },
-    //修改权限-发送请求
-    async setRoleRight() {
+    // 修改权限-发送请求
+    async setRoleRight () {
       // roles/:roleId/rights
       // roleId 当前要修改权限的角色id
-      /*  
+      /*
       rids树形节点中 所有全选和半选的label的id[]
       获取全选的id的数组arr1 getCheckedKeys()
       获取半选的id的数组arr2 getHalfCheckedKeys()
       arr = arr1 + arr2
       el-tree->js方法
       1.给要操作的dom元素 设置ref属性值 input ref = "txt"
-      2.this.$refs.ref属性值.js方法名() this.$refs.txt.focus() 
+      2.this.$refs.ref属性值.js方法名() this.$refs.txt.focus()
       */
       // 获取全选的id的数组 getCheckedKeys()
-      let arr1 = this.$refs.tree.getCheckedKeys();
+      let arr1 = this.$refs.tree.getCheckedKeys()
       // console.log(arr1);
       // 获取半选的id的数组 getHalfCheckedKeys()
-      let arr2 = this.$refs.tree.getHalfCheckedKeys();
+      let arr2 = this.$refs.tree.getHalfCheckedKeys()
       // console.log(arr2);
       // ES6 展开运算符 ...数组或者对象
-      let arr = [...arr1, ...arr2];
+      let arr = [...arr1, ...arr2]
       // console.log(arr);
       const res = await this.$http.post(`roles/${this.currRoleId}/rights`, {
-        rids: arr.join(","),
-      });
+        rids: arr.join(',')
+      })
       // 更新视图
-      this.getRoleList();
+      this.getRoleList()
       // 关闭对话框
-      this.dialogFormVisibleRight = false;
-    },
-  },
-};
+      this.dialogFormVisibleRight = false
+    }
+  }
+}
 </script>
 
 <style>
