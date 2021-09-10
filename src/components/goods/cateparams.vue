@@ -37,7 +37,14 @@
                 v-for="tag in scope.row.attr_vals"
                 closable
                 :disable-transitions="false"
-                @close="handleClose(scope.row.attr_vals,scope.row.attr_id,scope.row.attr_name,tag)"
+                @close="
+                  handleClose(
+                    scope.row.attr_vals,
+                    scope.row.attr_id,
+                    scope.row.attr_name,
+                    tag
+                  )
+                "
               >
                 {{ tag }}
               </el-tag>
@@ -47,8 +54,20 @@
                 v-model="inputValue"
                 ref="saveTagInput"
                 size="small"
-                @keyup.enter.native="handleInputConfirm(scope.row.attr_vals,scope.row.attr_id,scope.row.attr_name)"
-                @blur="handleInputConfirm(scope.row.attr_vals,scope.row.attr_id,scope.row.attr_name)"
+                @keyup.enter.native="
+                  handleInputConfirm(
+                    scope.row.attr_vals,
+                    scope.row.attr_id,
+                    scope.row.attr_name
+                  )
+                "
+                @blur="
+                  handleInputConfirm(
+                    scope.row.attr_vals,
+                    scope.row.attr_id,
+                    scope.row.attr_name
+                  )
+                "
               >
               </el-input>
               <el-button
@@ -88,9 +107,7 @@
         <el-button type="danger">设置静态参数</el-button>
         <!-- 表格 -->
         <el-table :data="arrStaticparams" style="width: 100%">
-          <el-table-column type="index" label="#">
-
-          </el-table-column>
+          <el-table-column type="index" label="#"> </el-table-column>
           <el-table-column label="属性名称" prop="attr_name"> </el-table-column>
           <el-table-column label="属性值" prop="attr_vals"> </el-table-column>
           <el-table-column label="操作">
@@ -182,7 +199,7 @@ export default {
       }
     },
     // 点击x按钮
-    async  handleClose (attr_vals, attr_id, attr_name, tag) {
+    async handleClose (attr_vals, attr_id, attr_name, tag) {
       attr_vals.splice(attr_vals.indexOf(tag), 1)
       // 发送请求
       // put请求体{attr_name:?,attr_sel:?,attr_vals:?}
@@ -194,8 +211,11 @@ export default {
         attr_sel: 'many',
         attr_vals: attr_vals.join(',')
       }
-      const res = await this.$http.put(`categories/${this.selectOptions[2]}/attributes/${attr_id}`, putData)
-      console.log(res)
+      const res = await this.$http.put(
+        `categories/${this.selectOptions[2]}/attributes/${attr_id}`,
+        putData
+      )
+      // console.log(res)
     },
     // 点击+newTag按钮
     showInput () {
@@ -215,8 +235,11 @@ export default {
           attr_sel: 'many',
           attr_vals: attr_vals.join(',')
         }
-        const res = await this.$http.put(`categories/${this.selectOptions[2]}/attributes/${attr_id}`, putData)
-        console.log(res)
+        const res = await this.$http.put(
+          `categories/${this.selectOptions[2]}/attributes/${attr_id}`,
+          putData
+        )
+        // console.log(res)
       }
       this.inputVisible = false
       this.inputValue = ''

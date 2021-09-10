@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import { Message } from 'element-ui'
 // import Login from '../components/login/login.vue'
 // 简写 @ 会自动找到src
 const Login = () => import('@/components/login/login.vue')
@@ -13,7 +14,6 @@ const CateParams = () => import('@/components/goods/cateparams.vue')
 const GoodsCate = () => import('@/components/goods/goodscate.vue')
 const Orders = () => import('@/components/orders/orders.vue')
 const Reports = () => import('@/components/reports/reports.vue')
-import { Message } from 'element-ui'
 Vue.use(Router)
 
 const router = new Router({

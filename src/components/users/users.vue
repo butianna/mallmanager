@@ -241,7 +241,7 @@ export default {
         `users?query=${this.query}&pagenum=${this.pagenum}
               &pagesize=${this.pagesize}`
       )
-      console.log(res)
+      // console.log(res)
       const {
         meta: { status, msg },
         data: { users, total }
@@ -260,15 +260,15 @@ export default {
     },
     // 分页相关的方法
     handleSizeChange (val) {
-      console.log(`每页 ${val} 条`)
+      // console.log(`每页 ${val} 条`)
       // 每页显示条数改变
       this.pagesize = val
-      //回到第一页
+      // 回到第一页
       this.pagenum = 1
       this.getUserList()
     },
     handleCurrentChange (val) {
-      console.log(`当前页: ${val}`)
+      // console.log(`当前页: ${val}`)
       // 页码改变时
       this.pagenum = val
       this.getUserList()
@@ -292,7 +292,7 @@ export default {
       this.dialogFormVisibleAdd = false
 
       const res = await this.$http.post(`users`, this.form)
-      console.log(res)
+      // console.log(res)
       const {
         meta: { status, msg },
         data
@@ -328,7 +328,7 @@ export default {
           // 1、data中找到userId
           // 2、把userId以showDeleUserMsgBox参数形式传进来
           const res = await this.$http.delete(`users/${userId}`)
-          console.log(res)
+          // console.log(res)
           if (res.data.meta.status === 200) {
             // 页码回到第一页
             this.pagenum = 1
@@ -350,7 +350,7 @@ export default {
     },
     // 编辑用户---显示对话框
     showEditUserDia (user) {
-      console.log(user)
+      // console.log(user)
       // 获取用户数据
       this.form = user
       // user 其实是调方法传过来的scope.row
@@ -360,7 +360,7 @@ export default {
     async editUser () {
       // users/:id
       const res = await this.$http.put(`users/${this.form.id}`, this.form)
-      console.log(res)
+      // console.log(res)
       // 1、关闭对话框
       this.dialogFormVisibleEdit = false
       // 2、更新视图
@@ -373,7 +373,7 @@ export default {
       const res = await this.$http.put(
         `users/${user.id}/state/${user.mg_state}`
       )
-      console.log(res)
+      // console.log(res)
     },
     // 分配角色 打开对话框
     async showSetUserRoleDia (user) {
@@ -387,7 +387,7 @@ export default {
       this.currRoleId = res.data.data.rid
       // 获取所有的角色
       const res1 = await this.$http.get(`roles`)
-      console.log(res1)
+      // console.log(res1)
       this.roles = res1.data.data
       this.dialogFormVisibleRol = true
     },
@@ -399,7 +399,7 @@ export default {
       const res = await this.$http.put(`users/${this.currUserId}/role`, {
         rid: this.currRoleId
       })
-      console.log(res)
+      // console.log(res)
       // 关闭对话框
       this.dialogFormVisibleRol = false
     }

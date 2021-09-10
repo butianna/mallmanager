@@ -165,7 +165,7 @@ export default {
       this.currRoleId = role.id
       // 获取树形结构的权限数据 ights/:type
       const res = await this.$http.get(`rights/tree`)
-      console.log(res)
+      // console.log(res)
       this.treelist = res.data.data
       // 展开所有的权限
       // var arrtemp = [];

@@ -13,9 +13,9 @@
       <el-form-item label="密码">
         <el-input v-model="formdata.password"></el-input>
       </el-form-item>
-      <el-button
-      @click.prevent="handleLogin()"
-      class="login-btn" type="primary">登录</el-button>
+      <el-button @click.prevent="handleLogin()" class="login-btn" type="primary"
+        >登录</el-button
+      >
     </el-form>
   </div>
 </template>
@@ -37,7 +37,10 @@ export default {
       const res = await this.$http.post('login', this.formdata)
 
       //   console.log(res)
-      const { data, meta: { msg, status } } = res.data
+      const {
+        data,
+        meta: { msg, status }
+      } = res.data
 
       if (status === 200) {
         // 登录成功
@@ -46,7 +49,7 @@ export default {
         // 在登录成功时 保存正确用户的token
         localStorage.setItem('token', data.token)
         // 1、跳转home
-        this.$router.push({name: 'home'})
+        this.$router.push({ name: 'home' })
         // 2、提示成功
         this.$message.success(msg)
       } else {
@@ -78,24 +81,24 @@ export default {
 </script>
 
 <style>
-.login-warp{
-    /* 最外层的div也要设置 height:100%; */
-    height: 100%;
-    background-color: #324152;
-    /* 弹性盒布局 */
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.login-warp {
+  /* 最外层的div也要设置 height:100%; */
+  height: 100%;
+  background-color: #324152;
+  /* 弹性盒布局 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.login-warp .login-form{
-    width: 400px;
-    background-color: #fff;
-    border-radius: 5px;
-    padding: 30px;
+.login-warp .login-form {
+  width: 400px;
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 30px;
 }
 
-.login-warp .login-btn{
-    width: 100%;
+.login-warp .login-btn {
+  width: 100%;
 }
 </style>

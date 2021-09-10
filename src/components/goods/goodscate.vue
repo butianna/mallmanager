@@ -176,7 +176,7 @@ export default {
     handleOpenEdit (cat) {
       this.form.cat_name = cat.cat_name
       this.form.cat_id = cat.cat_id
-      console.log(this.form)
+      // console.log(this.form)
       this.editDialogFormVisible = true
     },
     // 点击删除按钮,弹出删除提示框,发送删除请求
@@ -252,12 +252,12 @@ export default {
     handleSizeChange (val) {
       this.pagesize = val
       this.loadData()
-      console.log(`每页 ${val} 条`)
+      // console.log(`每页 ${val} 条`)
     },
     handleCurrentChange (val) {
       this.pagenum = val
       this.loadData()
-      console.log(`当前页: ${val}`)
+      // console.log(`当前页: ${val}`)
     }
   }
 }

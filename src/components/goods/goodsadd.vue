@@ -240,7 +240,7 @@ export default {
         return item.pic === file.response.data.tmp_path
       })
       this.form.pics.splice(index, 1)
-      console.log(this.form.pics)
+      // console.log(this.form.pics)
     },
     handleSuccess (file) {
       // file.data.tmp_path图片临时上传的路径

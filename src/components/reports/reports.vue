@@ -12,7 +12,7 @@ import * as echarts from 'echarts'
 import MyBread from '../cuscom/myBread.vue'
 
 export default {
-  components: {MyBread},
+  components: { MyBread },
   data () {
     return {
       option: {}

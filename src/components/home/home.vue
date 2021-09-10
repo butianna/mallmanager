@@ -26,15 +26,23 @@
         <!-- 开启路由模式为true   :router="true" -->
         <el-menu :router="true" :unique-opened="true">
           <!-- 1 -->
-          <el-submenu :index="''+item1.order" v-for="(item1,index) in menus" :key="index">
+          <el-submenu
+            :index="'' + item1.order"
+            v-for="(item1, index) in menus"
+            :key="index"
+          >
             <template slot="title">
               <i class="el-icon-location"></i>
-              <span>{{item1.authName}}</span>
+              <span>{{ item1.authName }}</span>
             </template>
             <!-- <template slot="title">分组一</template> -->
-            <el-menu-item :index="item2.path" v-for="(item2,index) in item1.children" :key="index">
+            <el-menu-item
+              :index="item2.path"
+              v-for="(item2, index) in item1.children"
+              :key="index"
+            >
               <i class="el-icon-menu"></i>
-              <span>{{item2.authName}}</span>
+              <span>{{ item2.authName }}</span>
             </el-menu-item>
           </el-submenu>
         </el-menu>
@@ -47,7 +55,7 @@
 </template>
 
 <script>
-export default{
+export default {
   data () {
     return {
       menus: []
